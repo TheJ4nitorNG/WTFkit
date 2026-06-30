@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# WTFKit Internal Test Artifacts
+.wtfkit_write_test
+wtfkit_state.json
+test-lock.json
+
+# IDE / Editor Files
+.vscode/
+.idea/
+*.swp
+*.suo
+
+# Gemini AI / Agent State Files
+GEMINI.md
+GEMINI_NEXT.md
+SCRATCHPAD.md
+meta_instructions.md
+hyperagent/
+debugsuite.md
+debugsuiteREADME.md
+
+# Log Files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS Generated
+.DS_Store
+Thumbs.db

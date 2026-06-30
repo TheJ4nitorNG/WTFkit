@@ -1,0 +1,19 @@
+[
+    {
+        "cause": "Git Merge Conflict",
+        "confidence": 0.98,
+        "match": "CONFLICT (content): Merge conflict",
+        "fixes": [
+            { "level": "SAFE", "command": "git status" },
+            { "level": "CAUTION", "command": "git merge --abort" }
+        ]
+    },
+    {
+        "cause": "Git Detached Head",
+        "confidence": 0.95,
+        "match": "You are in 'detached HEAD' state",
+        "fixes": [
+            { "level": "SAFE", "command": "git checkout main" }
+        ]
+    }
+]
