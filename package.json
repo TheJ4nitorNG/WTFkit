@@ -1,0 +1,24 @@
+{
+  "name": "wtfkit",
+  "version": "1.0.0",
+  "description": "Stop reading terminal errors. Understand them.",
+  "main": "src/cli/wtf.js",
+  "bin": {
+    "wtf": "src/cli/wtf.js",
+    "why": "src/cli/why.js",
+    "fix": "src/cli/fix.js",
+    "doctor": "src/cli/doctor.js",
+    "wtfkit-install": "src/cli/install.js",
+    "wtfkit": "src/cli/auto.js"
+  },
+  "scripts": {
+    "test": "node --test tests/**/*.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "wtf": "^1.5.0"
+  }
+}

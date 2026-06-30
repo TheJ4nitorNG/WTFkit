@@ -1,0 +1,19 @@
+[
+    {
+        "cause": "Module Resolution",
+        "confidence": 0.95,
+        "match": ["no required module provides", "missing go.sum entry", "go: module"],
+        "fixes": [
+            { "level": "SAFE", "command": "go mod tidy" },
+            { "level": "SAFE", "command": "go mod download" }
+        ]
+    },
+    {
+        "cause": "Build Failure",
+        "confidence": 0.90,
+        "match": ["undefined:", "cannot use"],
+        "fixes": [
+            { "level": "SAFE", "command": "Review the type definitions or imported packages." }
+        ]
+    }
+]

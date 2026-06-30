@@ -1,0 +1,26 @@
+[
+    {
+        "cause": "Permission Issue",
+        "confidence": 0.88,
+        "match": ["EPERM", "Access Denied", "Run as administrator"],
+        "fixes": [
+            { "level": "CAUTION", "command": "Start-Process powershell -Verb runAs" }
+        ]
+    },
+    {
+        "cause": "Restricted Execution Policy",
+        "confidence": 0.99,
+        "match": ["cannot be loaded because running scripts is disabled on this system", "Execution_Policies"],
+        "fixes": [
+            { "level": "CAUTION", "command": "Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned" }
+        ]
+    },
+    {
+        "cause": "PATH Not Recognized",
+        "confidence": 0.96,
+        "match": ["is not recognized as an internal or external command", "is not recognized as the name of a cmdlet"],
+        "fixes": [
+            { "level": "ADVANCED", "command": "Check and update Environment Variables (PATH)." }
+        ]
+    }
+]

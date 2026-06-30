@@ -1,0 +1,19 @@
+[
+    {
+        "cause": "Dependency Resolution Failed",
+        "confidence": 0.95,
+        "match": ["failed to resolve", "could not find `Cargo.toml`"],
+        "fixes": [
+            { "level": "SAFE", "command": "cargo fetch" },
+            { "level": "CAUTION", "command": "cargo clean && cargo build" }
+        ]
+    },
+    {
+        "cause": "Borrow Checker / Lifetimes",
+        "confidence": 0.98,
+        "match": ["cannot borrow", "does not live long enough", "move occurs because"],
+        "fixes": [
+            { "level": "ADVANCED", "command": "Review Rust lifetime scopes or use `.clone()`/`Rc`/`Arc` if appropriate." }
+        ]
+    }
+]

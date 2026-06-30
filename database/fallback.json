@@ -1,0 +1,8 @@
+[
+    {
+        "cause": "Missing File or Directory",
+        "confidence": 0.90,
+        "match": "ENOENT",
+        "fixes": []
+    }
+]
