@@ -3,14 +3,14 @@
 const { runDiagnostic } = require('./shared');
 const { generatePlan } = require('../repair/planner');
 
-function main() {
+async function main() {
     if (process.argv.includes('-help') || process.argv.includes('--help')) {
-        console.log("Usage: fix [--json] [-help]\n\nSuggests safe, actionable repair commands for your last terminal failure.");
+        console.log("Usage: fix [--json] [--ai] [file|string] [-help]\n\nSuggests safe, actionable repair commands for your last terminal failure.");
         return;
     }
 
     const isJson = process.argv.includes('--json');
-    const { history, context, diagnoses } = runDiagnostic();
+    const { history, context, diagnoses } = await runDiagnostic();
 
     if (!diagnoses || diagnoses.length === 0) {
         if (isJson) return console.log(JSON.stringify({ hasRepairs: false, error: "No cause identified." }));

@@ -176,15 +176,21 @@ Then:
 
 
 
-⸻
 
 
 
-Why this exists
+
+##### **Why this exists**
+
+
 
 Windows developers waste an absurd amount of time fighting terminal errors that aren’t actually difficult—they’re just poorly explained.
 
+
+
 Things like:
+
+
 
 •	EPERM
 
@@ -385,6 +391,8 @@ WTFKit currently specializes in **Windows development environments**.
 •	Python
 
 •	Rust
+
+•	Flutter
 
 
 

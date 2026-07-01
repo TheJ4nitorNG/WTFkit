@@ -293,22 +293,22 @@ System Health~~
 
 
 
-###### ~~v0.9 — Cross-Platform~~
+###### v0.9 — Cross-Platform
 
 
-~~Expand beyond Windows.~~
+Expand beyond Windows.
 
 
-~~Planned support:~~
+Planned support:
 
 
-~~•	WSL
+•	WSL
 •	Git Bash
 •	Linux
 •	macOS
 •	zsh
 •	bash
-•	fish~~
+•	fish
 
 
 
@@ -317,7 +317,7 @@ System Health~~
 
 
 
-###### ~~v1.0 — Stable Release~~
+###### v1.0 — Stable Release (•IN PROGRESS)
 
 
 ~~Goals:~~
@@ -328,10 +328,10 @@ System Health~~
 •	Offline rule database
 •	Timeline reconstruction
 •	Confidence scoring
-•	Doctor mode
+•	Doctor mode~~
 •	Extensive documentation
-•	Automated testing
-•	Community contributions~~
+~~•	Automated testing~~
+•	Community contributions
 
 
 
@@ -346,7 +346,7 @@ System Health~~
 Potential long-term features:
 
 
-•	AI-assisted diagnostics (optional)
+•	AI-assisted diagnostics (optional) ***(•IN PROGRESS)***
 •	VS Code extension
 •	Cursor integration
 •	GitHub Actions annotations

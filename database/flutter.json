@@ -1,0 +1,36 @@
+[
+    {
+        "cause": "Flutter Pub Dependency Missing",
+        "confidence": 0.95,
+        "match": ["Target of URI doesn't exist", "Error: Cannot run with sound null safety"],
+        "fixes": [
+            { "level": "SAFE", "command": "flutter pub get" }
+        ]
+    },
+    {
+        "cause": "CocoaPods Out of Sync",
+        "confidence": 0.95,
+        "match": ["Warning: CocoaPods not installed", "CocoaPods's specs repository is too out-of-date", "Podfile.lock: No such file or directory"],
+        "fixes": [
+            { "level": "SAFE", "command": "cd ios && pod install && cd .." },
+            { "level": "CAUTION", "command": "cd ios && pod repo update && pod install && cd .." }
+        ]
+    },
+    {
+        "cause": "Android Gradle Build Failure",
+        "confidence": 0.90,
+        "match": ["Execution failed for task ':app:compileDebugJavaWithJavac'", "Gradle task assembleDebug failed"],
+        "fixes": [
+            { "level": "SAFE", "command": "flutter clean" },
+            { "level": "SAFE", "command": "flutter pub get" }
+        ]
+    },
+    {
+        "cause": "Flutter Version Conflict",
+        "confidence": 0.92,
+        "match": ["The current Dart SDK version is", "Because every version of flutter_test from sdk depends on"],
+        "fixes": [
+            { "level": "CAUTION", "command": "flutter upgrade" }
+        ]
+    }
+]

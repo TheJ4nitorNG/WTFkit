@@ -9,6 +9,7 @@ const goPlugin = require('./go');
 const bunPlugin = require('./bun');
 const yarnPlugin = require('./yarn');
 const pnpmPlugin = require('./pnpm');
+const flutterPlugin = require('./flutter');
 
 class PluginRegistry {
     constructor() {
@@ -26,6 +27,7 @@ class PluginRegistry {
         this.register('bun', bunPlugin);
         this.register('yarn', yarnPlugin);
         this.register('pnpm', pnpmPlugin);
+        this.register('flutter', flutterPlugin);
         this.register('fallback', fallbackPlugin);
     }
 

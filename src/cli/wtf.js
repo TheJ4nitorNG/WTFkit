@@ -2,14 +2,14 @@
 
 const { runDiagnostic } = require('./shared');
 
-function main() {
+async function main() {
     if (process.argv.includes('-help') || process.argv.includes('--help')) {
-        console.log("Usage: wtf [--json] [-help]\n\nIdentifies what broke in your last terminal command.");
+        console.log("Usage: wtf [--json] [--ai] [file|string] [-help]\n\nIdentifies what broke in your last terminal command.");
         return;
     }
 
     const isJson = process.argv.includes('--json');
-    const { history, context, diagnoses } = runDiagnostic();
+    const { history, context, diagnoses } = await runDiagnostic();
 
     if (!history || !history.command) {
         if (isJson) return console.log(JSON.stringify({ error: "Could not detect the last command." }));
