@@ -435,50 +435,188 @@ The three questions every terminal failure creates are:
 Repository
 
 wtfkit/
-
 │
-
 ├── bin/
+│   ├── doctor.cmd
+│   ├── doctor.ps1
+│   ├── fix.cmd
 
-│   ├── wtf.cmd
+│   ├── fix.ps1
 
 │   ├── why.cmd
 
-│   └── fix.cmd
+│   ├── why.ps1
+
+│   ├── wtf.cmd
+
+│   ├── wtf.ps1
+
+│   ├── wtfkit.cmd
+
+│   ├── wtfkit.ps1
+
+│   ├── wtfkit-install.cmd
+
+│   └── wtfkit-install.ps1
+│
+
+├── database/
+
+│   ├── bun.json
+
+│   ├── docker.json
+
+│   ├── fallback.json
+
+│   ├── git.json
+
+│   ├── go.json
+
+│   ├── npm.json
+
+│   ├── pnpm.json
+
+│   ├── python.json
+
+│   ├── rust.json
+
+│   ├── windows.json
+
+│   └── yarn.json
 
 │
 
+│
 ├── src/
 
+│   ├── analyzers/
+
+│   │   └──engine.js
+
+│   │
 │   ├── cli/
+│   │   ├── auto.js
+│   │   ├── doctor.js
+│   │   ├── fix.js
+│   │   ├── index.js
 
+│   │   ├── install.js
+
+│   │   ├── shared.js
+
+│   │   ├── why.js
+
+│   │   └── wtf.js
+
+│   │
+│   ├── collectors/
+│   │   ├── env.js
+│   │   ├── filesystem.js
+│   │   ├── history.js
+│   │   ├── path.js
+│   │   └── processes.js
+
+│   │
 │   ├── core/
+│   │	└──windows/
+│   │
+│   ├── explain/
+│   │   └── confidence.js
+│   │
+│   ├── history/
+│   │   ├── cmdl.js
+│   │   ├── parser.js
+│   │   └── powershell.js
 
-│   │   └── windows/
+│   │
+│   ├── output/
+│   │   ├── colors.js
+│   │   ├── formatter.js
+│   │   └── tables.js
+│   │
 
-│   │       ├── history.ps1.js
+│   ├── plugins/
 
-│   │       ├── process.win.js
+│   │   ├── bun/
 
-│   │       └── locks.win.js
+│   │   │   └── index.js
+
+│   │	├── docker/
+
+│   │   │   └── index.js
+
+│   │	├── fallback/
+
+│   │   │   └── index.js
+
+│   │	├── git/
+
+│   │   │   └── index.js
+
+│   │	├── go/
+
+│   │   │   └── index.js
+
+│   │	├── npm/
+
+│   │   │   └── index.js
+
+│   │	├── pnpm/
+
+│   │   │   └── index.js
+
+│   │	├── python/
+
+│   │   │   └── index.js
+
+│   │	├── rust/
+
+│   │   │   └── index.js
+
+│   │	├── windows/
+
+│   │   │   └── index.js
+
+│   │	├── yarn/
+
+│   │   │   └── index.js
+
+│   │   └──registry.js
 
 │   │
 
+│   ├── repair/
+
+│   │   └── planner.js
+
+│   │
+│   └── shared/
+│       ├── constants.js
+│       ├── logger.js
+
+│       ├── ruleParser.js
+│       └── utils.js
+│
+├── tests/
+
+│   ├── explain/
+
 │   └── heuristics/
 
-│       ├── npm.windows.js
-
-│       └── powershell.js
-
 │
+├── .gitignore
 
-├── examples/
+├── ARCHITECTURE.md
+
+├── BUILDPLAN.md
+
+├── CONTRIBUTING.md
 
 ├── README.md
 
-├── package.json
+├── ROADMAP.md
 
-└── LICENSE
+└── package.json
 
 
 
