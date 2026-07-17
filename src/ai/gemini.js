@@ -1,8 +1,24 @@
+const { GoogleGenAI, Type } = require('@google/genai');
+
 async function askGemini(history, context) {
     const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
         console.error("\n⚠ Warning: GEMINI_API_KEY environment variable is required to use the --ai flag.\n");
         return null;
+    }
+
+    // Strip conflicting Google Cloud variables that cause the SDK to attempt Vertex/OAuth authentication
+    const originalEnv = { ...process.env };
+    delete process.env.GOOGLE_CLOUD_PROJECT;
+    delete process.env.GOOGLE_APPLICATION_CREDENTIALS;
+    delete process.env.GOOGLE_GENAI_USE_VERTEXAI;
+
+    let ai;
+    try {
+        ai = new GoogleGenAI({ apiKey: apiKey });
+    } finally {
+        // Restore environment variables
+        process.env = originalEnv;
     }
 
     const prompt = `
@@ -12,49 +28,75 @@ Analyze this terminal failure and provide a structured diagnosis.
 Command: ${history.command}
 Exit Code: ${history.exitCode}
 Error Output:
-${history.stderr}
+${history.stderr || "(No stderr captured. The command may have failed silently or written to stdout instead.)"}
 
-Return ONLY a valid JSON object matching this schema exactly. Do not include markdown blocks or any other text.
-{
-  "cause": "Short title of the error (e.g. 'Type Error', 'Missing File')",
-  "confidence": 0.85,
-  "explanation": {
-    "timeline": [
-        "14:00:00\\nCommand started", 
-        "14:00:01\\nAnalysis of what caused the crash"
-    ],
-    "rootCauseText": "Detailed explanation of why it failed."
-  },
-  "fixes": [
-    { "level": "SAFE", "command": "command to fix it safely" }
-  ]
-}
+Consider the following system context:
+Processes: ${JSON.stringify(context.processes || {}, null, 2)}
+Environment: ${JSON.stringify(context.env || {}, null, 2)}
+Filesystem state (abbreviated): ${JSON.stringify(context.filesystem || {}, null, 2)}
 `;
 
+    const responseSchema = {
+        type: Type.OBJECT,
+        properties: {
+            cause: {
+                type: Type.STRING,
+                description: "Short title of the error (e.g. 'Type Error', 'Missing File')"
+            },
+            confidence: {
+                type: Type.NUMBER,
+                description: "Confidence score between 0.0 and 1.0"
+            },
+            explanation: {
+                type: Type.OBJECT,
+                properties: {
+                    timeline: {
+                        type: Type.ARRAY,
+                        items: {
+                            type: Type.STRING
+                        },
+                        description: "An array of strings representing the sequence of events leading to the failure. Format: 'HH:MM:SS\\nEvent description'"
+                    },
+                    rootCauseText: {
+                        type: Type.STRING,
+                        description: "Detailed explanation of why the command failed."
+                    }
+                },
+                required: ["timeline", "rootCauseText"]
+            },
+            fixes: {
+                type: Type.ARRAY,
+                items: {
+                    type: Type.OBJECT,
+                    properties: {
+                        level: {
+                            type: Type.STRING,
+                            description: "Risk level of the fix. Allowed values: SAFE, CAUTION, ADVANCED"
+                        },
+                        command: {
+                            type: Type.STRING,
+                            description: "The terminal command to execute to fix the issue."
+                        }
+                    },
+                    required: ["level", "command"]
+                },
+                description: "An array of suggested fixes."
+            }
+        },
+        required: ["cause", "confidence", "explanation", "fixes"]
+    };
+
     try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: prompt }] }],
-                generationConfig: {
-                    response_mime_type: "application/json"
-                }
-            })
+        const response = await ai.models.generateContent({
+            model: 'gemini-3.1-flash-lite',
+            contents: prompt,
+            config: {
+                responseMimeType: "application/json",
+                responseSchema: responseSchema
+            }
         });
 
-        const data = await response.json();
-        
-        if (data.error) {
-            if (data.error.code === 429 || data.error.message.includes('Quota exceeded')) {
-                console.error("\n⚠ AI Error: Gemini API rate limit exceeded (Too many requests per minute). Please wait a moment and try again.\n");
-            } else {
-                console.error("\n⚠ AI Error:", data.error.message, "\n");
-            }
-            return null;
-        }
-
-        const jsonText = data.candidates[0].content.parts[0].text;
+        const jsonText = response.text;
         const result = JSON.parse(jsonText);
 
         return {
@@ -68,7 +110,11 @@ Return ONLY a valid JSON object matching this schema exactly. Do not include mar
         };
 
     } catch (e) {
-        console.error("\n⚠ Failed to contact Gemini API:", e.message, "\n");
+        if (e.status === 429 || (e.message && e.message.includes('Quota exceeded'))) {
+            console.error("\n⚠ AI Error: Gemini API rate limit exceeded (Too many requests per minute). Please wait a moment and try again.\n");
+        } else {
+            console.error("\n⚠ Failed to contact Gemini API:", e.message, "\n");
+        }
         return null;
     }
 }

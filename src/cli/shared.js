@@ -73,7 +73,7 @@ async function runDiagnostic() {
 
     let diagnoses = analyze(history, context);
 
-    if (isAiEnabled && history && history.stderr) {
+    if (isAiEnabled && history) {
         const aiDiagnosis = await askGemini(history, context);
         if (aiDiagnosis) {
             diagnoses.push(aiDiagnosis);

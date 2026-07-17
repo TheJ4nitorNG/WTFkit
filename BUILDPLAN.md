@@ -3,8 +3,8 @@
 
 
 
-A roadmap for building the WTFKit Command Line Debug Suite from MVP to a production-ready debugging platform.
----
+
+## A roadmap for building the WTFKit Command Line Debug Suite from MVP to a production-ready debugging platform.
 
 #### 
 
@@ -15,12 +15,15 @@ A roadmap for building the WTFKit Command Line Debug Suite from MVP to a product
 #### Vision
 
 
+
 WTFKit is a command-line debugging assistant that answers three questions after any terminal failure:
+
 
 
 •	wtf → **What broke?**
 •	why → **Why did it happen?**
 •	fix → **How do I fix it?**
+
 
 
 The goal is to ***eliminate*** the “copy error → Google → Stack Overflow → random fixes” workflow and replace it with fast, local, actionable diagnostics.
@@ -34,7 +37,12 @@ The goal is to ***eliminate*** the “copy error → Google → Stack Overflow �
 ##### Project Structure
 
 
+
 wtfkit/
+
+
+
+
 │
 ├── bin/
 │   ├── doctor.cmd
@@ -181,7 +189,7 @@ wtfkit/
 
 │   │   │   └── index.js
 
-│   │   └──registry.js 
+│   │   └──registry.js
 
 │   │
 
@@ -231,10 +239,13 @@ wtfkit/
 ##### Goal:
 
 
+
 Solve the most common Windows + Node.js terminal failures.
 
 
+
 Target commands:
+
 
 
 **$wtf
@@ -244,14 +255,17 @@ $fix**
 
 
 
+
 ###### History Reader:
+
 
 
 Capture the user’s most recent terminal command.
 
 
-Responsibilities:
----
+
+## Responsibilities:
+
 
 
 •	Read PowerShell history
@@ -262,8 +276,9 @@ Responsibilities:
 •	Record working directory
 
 
-Example output:
----
+
+## Example output:
+
 
 
 {
@@ -278,13 +293,17 @@ Example output:
 
 
 
+
 ###### Heuristic Engine:
+
 
 
 Recognize common failures.
 
 
+
 **Initial rules:**
+
 
 
 **•	EPERM
@@ -298,7 +317,9 @@ Recognize common failures.
 •	Node version mismatch**
 
 
+
 **Example:**
+
 
 
 \[
@@ -313,13 +334,17 @@ Recognize common failures.
 
 
 
+
 ###### Explain Engine:
+
 
 
 Translate technical errors into plain English.
 
 
+
 **Example:**
+
 
 
 Command:
@@ -351,13 +376,17 @@ What happened:
 
 
 
+
 ###### Repair Engine:
+
 
 
 Map causes to safe fixes.
 
 
+
 **Example:**
+
 
 
 {
@@ -375,7 +404,9 @@ Map causes to safe fixes.
 
 
 
+
 ### **Phase 2 — Context Collection**
+
 
 
 
@@ -385,14 +416,17 @@ Instead of relying solely on error text, gather context from the system.
 
 
 
-Process Collector:
----
+
+## Process Collector:
+
 
 
 Inspect running processes.
 
 
+
 **Examples:**
+
 
 
 Get-Process node
@@ -407,10 +441,13 @@ Detect:
 
 
 
+
 ###### Environment Collector:
 
 
+
 **Inspect:**
+
 
 
 •	PATH
@@ -419,7 +456,9 @@ Detect:
 •	environment variables
 
 
+
 **Detect:**
+
 
 
 •	duplicate Node installations
@@ -432,10 +471,13 @@ Detect:
 
 
 
+
 ###### Filesystem Collector:
 
 
+
 **Inspect:**
+
 
 
 •	package.json
@@ -444,7 +486,9 @@ Detect:
 •	permissions
 
 
+
 **Detect:**
+
 
 
 •	lock files
@@ -459,14 +503,18 @@ Detect:
 
 
 
+
 ###### Confidence Scoring
+
 
 
 Instead of:
 
 
+
 Probably...
 Return ranked diagnoses:
+
 
 
 **96%
@@ -489,6 +537,7 @@ Corporate proxy**
 
 
 
+
 ### **Phase 3 — Timeline Reconstruction**
 
 
@@ -498,8 +547,10 @@ Corporate proxy**
 The signature feature of WTFKit.
 
 
+
 Running:
 $why
+
 
 
 Produces:
@@ -525,7 +576,9 @@ Root Cause
 Locked filesystem
 
 
+
 Instead of simply reporting the error, ***reconstruct the sequence of events that caused it***.
+
 
 
 
@@ -539,7 +592,9 @@ Instead of simply reporting the error, ***reconstruct the sequence of events tha
 
 
 
+
 Support additional ecosystems through plugins.
+
 
 
 plugins/
@@ -561,7 +616,9 @@ fixes() {}
 }
 
 
+
 This allows contributors to extend WTFKit without modifying the core.
+
 
 
 
@@ -573,12 +630,13 @@ This allows contributors to extend WTFKit without modifying the core.
 ### Phase 5 — Intelligent Repair Ranking
 
 
+
 Not every fix should be treated equally.
 Rank suggestions by safety.
 
 
-**SAFE**
----
+
+## **SAFE**
 
 **Restart Node**
 
@@ -601,7 +659,9 @@ Rank suggestions by safety.
 **Modify Registry**
 
 
+
 The safest repair should **always** appear ***first***.
+
 
 
 
@@ -613,7 +673,9 @@ The safest repair should **always** appear ***first***.
 Phase 6 — Offline Knowledge Base
 
 
+
 Move diagnostic rules into structured data.
+
 
 
 database/
@@ -625,8 +687,9 @@ git.json
 powershell.json
 
 
-Example rule:
----
+
+## Example rule:
+
 
 
 *{
@@ -640,8 +703,9 @@ Example rule:
 }*
 
 
-Benefits:
----
+
+## Benefits:
+
 
 
 •	easier updates
@@ -656,17 +720,21 @@ Benefits:
 
 
 
+
 ### **Phase 7 — Doctor Mode**
+
 
 
 System diagnostics.
 
 
+
 $doctor
 
 
-Checks:
----
+
+## Checks:
+
 
 
 •	Node
@@ -681,8 +749,9 @@ Checks:
 •	internet connectivity
 
 
-Example:
----
+
+## Example:
+
 
 
 System Health
@@ -710,15 +779,17 @@ Overall Score
 
 
 
+
 ### **Phase 8 — Explain Anything**
 
 
-Expand beyond terminal history.
----
+
+## Expand beyond terminal history.
 
 
-Examples:
----
+
+## Examples:
+
 
 
 $wtf build.log
@@ -726,7 +797,9 @@ $wtf --paste
 $wtf "TypeError: Cannot read properties of undefined"
 
 
+
 Support:
+
 
 
 •	pasted errors
@@ -742,28 +815,32 @@ Support:
 
 
 
+
 ### **Phase 9 — Optional AI Assistance**
 
 
-The core engine remains deterministic and fully offline.
----
+
+## The core engine remains deterministic and fully offline.
 
 
-Optional mode:
----
+
+## Optional mode:
+
 
 
 $wtf --ai
 
 
-Potential capabilities:
----
+
+## Potential capabilities:
+
 
 
 •	summarize long logs
 •	explain unfamiliar stack traces
 •	identify uncommon failure patterns
 •	recommend next debugging steps when rule confidence is low
+
 
 
 AI should **enhance** the experience, not **replace** the deterministic rule engine.
@@ -775,11 +852,13 @@ AI should **enhance** the experience, not **replace** the deterministic rule eng
 
 
 
+
 ### Milestone Roadmap
 
 
-Version	Focus	***Deliverable***
----
+
+## Version	Focus	***Deliverable***
+
 
 
 v0.1	CLI foundation	wtf, why, fix with PowerShell history
@@ -789,6 +868,7 @@ v0.4	Timeline engine	Event reconstruction and root cause analysis
 v0.5	Plugin system	Git, Python, Docker, Bun, pnpm support
 v0.6	Doctor mode	Environment health diagnostics
 v1.0	Production release	Stable Windows debugging suite with plugin ecosystem
+
 
 
 
